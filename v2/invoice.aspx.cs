@@ -181,7 +181,7 @@ public partial class v2_invoice : AdminBasePage
 	string InvoicePrintHeader(string sType, string sSales, string sNumber, string sDate, string sPO_number, string card_id, string card_name, string supplier_invoice)
 	{
 		string Gcompanyname = GetSiteSettings("company_name");
-		string header = ReadSitePage("invoice_header");
+		string header = ReadSitePage("v2_invoice_header");
 		header = header.Replace("@@companyname", Gcompanyname);
 		try
 		{
@@ -626,18 +626,17 @@ public partial class v2_invoice : AdminBasePage
 		string po_number = dr["cust_ponumber"].ToString();
 
 		StringBuilder sb = new StringBuilder();
-
-		sb.Append("<html><header><style type=\"text/css\">\r\n");
+		Response.Write(stylesheet);
+		sb.Append("<style type=\"text/css\">\r\n");
 		sb.Append("td{FONT-WEIGHT:300;FONT-SIZE:8PT;FONT-FAMILY:verdana;}\r\n");
-		Response.Write(stylesheet + "</header>");
-		string th1 = "<table width=100% align=center valign=center cellspacing=1 cellpadding=1 border=1 bordercolor=#EEEEEE bgcolor=white";
-		th1 += " style=\"font-family:Verdana;font-size:8pt;border-width:0px;border-style:Solid;border-collapse:collapse;fixed\">";
+		
+	
 		sb.Append("body{FONT-WEIGHT:300;FONT-SIZE:8PT;FONT-FAMILY:verdana;}</style>\r\n");
 		InvoicePrintShip(dr, "");
 		sb.Append(InvoicePrintHeader(sType, sales, sInvoiceNumber, tDate.ToString("dd/MM/yyyy"), po_number));
 		sb.Append("<hr>");
 		sb.Append(BuildItemTable(dsi.Tables[0], false, sb.ToString(), InvoicePrintBottom(dr["sales_note"].ToString())));
-		sb.Append("</body></html>");
+		
 		return sb.ToString();
 	}
 
