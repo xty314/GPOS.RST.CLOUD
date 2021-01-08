@@ -30,7 +30,7 @@ public partial class v2_invoice : AdminBasePage
 
 	string m_inv_sNumber = "";
 	string m_itemCols = "10"; //item table columns
-
+	
 	string m_shippingAddress = "";
 	string m_billingAddress = "";
 	string stylesheet = "<STYLE> H1 {page-break-before: always}</STYLE>";

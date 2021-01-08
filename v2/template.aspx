@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="template.aspx.cs" Inherits="v2_template" MasterPageFile="~/Master_Page/Admin_Layout/AdminLayout.master" %>
 
-<%--注意加入MasterPageFile--%>
+<%--import MasterPageFile--%>
 
 <%@ Register Src="~/User_Control/Breadcrumbs.ascx" TagPrefix="uc1" TagName="Breadcrumbsl" %>
 <%--<%@Import Namespace="System.Data.SqlClient" %>

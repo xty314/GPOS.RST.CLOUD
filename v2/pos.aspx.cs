@@ -12,7 +12,7 @@ public partial class v2_pos : AdminBasePage
 {
     DataSet dst = new DataSet();    //for creating Temp talbes templated on an existing sql table
     const int m_cols = 8;   //how many columns main table has, used to write colspan=
-    string m_tableTitle = "";
+	 public string m_tableTitle = "";
     string m_invoiceNumber = "";
     string m_comment = "";  //Sales Comment in Invoice Table;
     string m_custpo = "";
@@ -48,11 +48,7 @@ public partial class v2_pos : AdminBasePage
     string tableWidth = "97%";
     string m_sSetItemPriceWithGST = "false";
     double m_dFreightOrginal = 0;
-    protected void Page_Load(object sender, EventArgs e)
-    {
-
-    }
-    protected void Print_Page()
+    protected void Page_Load(object sender, EventArgs eA)
     {
 		TS_PageLoad(); //do common things, LogVisit etc...
 		if (!SecurityCheck("editor"))
@@ -89,6 +85,7 @@ public partial class v2_pos : AdminBasePage
 				m_sSetItemPriceWithGST = bool.Parse(m_sSetItemPriceWithGST).ToString();
 
 			}
+			
 			catch (Exception e)
 			{
 				m_sSetItemPriceWithGST = "false";
@@ -122,7 +119,7 @@ public partial class v2_pos : AdminBasePage
 		if (Request.QueryString["t"] == "created")
 		{
 			m_orderID = Request.QueryString["id"];
-	
+
 			Response.Write("<br><br><center><h3>" + m_sSalesType.ToUpper() + " Created</h3>");
 			Response.Write("<h5>Number : </h5><h1><font color=red>" + m_orderID + "</h1><br>");
 			Response.Write("<input type=button ");
@@ -133,7 +130,7 @@ public partial class v2_pos : AdminBasePage
 			Response.Write(" value='Process' " + Session["button_style"] + ">");
 			Response.Write("<br><br><br><br><br>");
 			PrintSearchForm();
-		
+
 			return;
 		}
 		else if (Request.QueryString["p"] == "new")
@@ -250,7 +247,7 @@ public partial class v2_pos : AdminBasePage
 
 						if (m_nSearchReturn <= 0)
 						{
-					
+
 							Response.Write("<br><br><center><h3>No Item's code matches <b>" + Request.Form["supplier_code_search"] + "");
 							Response.Write(" Or Item has phased out </b></h3>");
 							Response.Write("<input type=button " + Session["button_style"] + " value=Back onclick=window.location=('pos.aspx?ssid=" + m_ssid + "')>");
@@ -267,7 +264,7 @@ public partial class v2_pos : AdminBasePage
 					DoMPNSearch(Request.Form["item_code_search"]);
 					if (m_nSearchReturn <= 0)
 					{
-					
+
 						Response.Write("<br><br><center><b>Search Result of  <font size=+1 color=red>" + Request.Form["item_code_search"] + "</b></font>");
 						Response.Write("<br><br><b>as S/N : Not Found!<br><br></b>");
 						Response.Write("<b>as product code : Not Found --- Not Valid Product Code!</b><br>");
@@ -301,7 +298,7 @@ public partial class v2_pos : AdminBasePage
 
 		if (Request.QueryString["t"] == "del")
 		{
-		
+
 			bool bKeyOK = true;
 			if (Session["delete_order_key" + m_ssid] == null)
 				bKeyOK = false;
@@ -331,7 +328,7 @@ public partial class v2_pos : AdminBasePage
 					Response.Write("<br><br><h3>Error Deleting Order");
 				}
 			}
-	
+
 			return;
 		}
 		else if (Request.QueryString["t"] == "vpq")
@@ -414,7 +411,7 @@ public partial class v2_pos : AdminBasePage
 
 		else if (Request.Form["cmd"] == "Update Order" || Request.Form["cmd"] == "Update Quote")
 		{
-	
+
 			if (DoUpdateOrder())
 			{
 				if (Request.Form["cmd"] == "Update Order")
@@ -428,13 +425,13 @@ public partial class v2_pos : AdminBasePage
 			{
 				Response.Write("<br><br><h3>Error updating order");
 			}
-			
+
 			return;
 		}
 
 		else if (Request.Form["cmd"] == "Delete Order" || Request.Form["cmd"] == "Delete Quote")
 		{
-			
+
 			string delkey = DateTime.Now.ToOADate().ToString();
 			Session["delete_order_key" + m_ssid] = delkey;
 			Response.Write("<script Language=javascript");
@@ -488,9 +485,9 @@ public partial class v2_pos : AdminBasePage
 			dtCart = (DataTable)Session["ShoppingCart" + m_ssid];
 			if (dtCart.Rows.Count <= 0)
 			{
-			
+
 				Response.Write("<br><br><center><h3>Error. Cannot create empty order");
-				
+
 				return;
 			}
 
@@ -527,10 +524,10 @@ public partial class v2_pos : AdminBasePage
 					Response.Write("<meta  http-equiv=\"refresh\" content=\"0; URL=pos.aspx?t=created&id=" + m_orderID + "&ssid=" + m_ssid + "\">");
 				else
 				{
-		
+
 					Response.Write(term_msg);
 					Response.Write("<br><center><input type=button onclick=window.location='pos.aspx?t=created&id=" + m_orderID + "&ssid=" + m_ssid + "' " + Session["button_style"] + " value=Continue>");
-				
+
 				}
 				return;
 			}
@@ -577,8 +574,13 @@ public partial class v2_pos : AdminBasePage
 		}
 		else
 			m_tableTitle = "NEW " + m_sSalesType.ToUpper();
+		//set Breadcrumbs
+		Breadcrumbs.GTitle = m_tableTitle;
+	}
+	protected void Print_Page()
+    {
+		
 
-	
 		MyDrawTable();
 
 	}
@@ -1342,24 +1344,11 @@ public partial class v2_pos : AdminBasePage
 
 		bool bRet = true;
 
-		PrintJavaFunction();
-		Response.Write("</table>");
+		
+	
 		Response.Write("<form name=form1 action='pos.aspx?ssid=" + m_ssid + "");
-		//if(Session[m_sCompanyName + "gst_onoff_for_pos"] != null && Session[m_sCompanyName + "gst_onoff_for_pos"] != "")
-		//	Response.Write("&gst="+ Session[m_sCompanyName + "gst_onoff_for_pos"].ToString());
 		Response.Write("' method=post>");
-		Response.Write("<table align=center cellspacing=0 cellpadding=0 width=100% valign=center bgcolor=white border=0><tr>");
-		Response.Write("<td width='17' height='30' id='top-header1'>&nbsp;</td>");
-		Response.Write("<td height='30' class='pageName' id='top-header2' ><font size=3>" + m_tableTitle + "</td>");
-		Response.Write("<td width='76' id='top-header3'>&nbsp;</td>");
-		Response.Write("  <td  height='30' id='top-header4'>&nbsp;</td>");
-		Response.Write("<td width='40' id='top-header5'>&nbsp;</td>");
-
-		//	Response.Write("<td valign=top class='pageName' >");
-		//Response.Write("<br><center><h3>" + m_tableTitle + "</h3></center>");
-		//	Response.Write(" <font size=3>" + m_tableTitle + "");
-		//	Response.Write("</td></tr></table>");
-		Response.Write("</tr></table>");
+	
 		//print sales header table
 		if (!PrintSalesHeaderTable(m_custpo))
 			return false;
@@ -1537,98 +1526,7 @@ public partial class v2_pos : AdminBasePage
 		//	if(m_quoteType != "3" || Request.QueryString["p"] == "new")
 		Response.Write("<tr ><td colspan='" + m_cols + "'>");
 
-		Response.Write("<script language=javascript>");
-		Response.Write("<!-- hide old browser ");
-		string sjava = @"
-function iCalPrice(price, qty, i, discount)
-{
-	var dtotal, dDiscount;
-	if(parseFloat(discount))
-		dDiscount = discount;
-	else
-		dDiscount = 0;
-	dDiscount = (dDiscount / 100);
-	
-	//price = price.replace('$', '');
-	price = convertPrice(price);
-	qty = qty.replace('$', '');
-	if(IsNumberic(price) && IsNumberic(qty))
-	{
-		dtotal = (price *(1-dDiscount)) * qty;		
-		dtotal = dtotal.toFixed(2);
-";
-		sjava += "		eval(\"document.form1.dtotal\" + i + \".value = dtotal\")";
-		sjava += @"
-	}
-	var bfalse;
-	bfalse = false;
-	if(!IsNumberic(price))
-	{
-		bfalse = true;
-	}
-	if(!IsNumberic(qty))
-	{
-		bfalse = true;
-	}
-	if(bfalse)
-		return false;
-	else
-		return true;
-//	window.alert(dtotal);
-	
-}
-function convertPrice(sPrice)
-{	
-	var sSwap, bFoundDot;
-	sSwap = '';
-	for (i = 0; i < sPrice.length; i++) 
-	{ 
-		if(parseFloat(sPrice.charAt(i))) 
-		{			
-			sSwap = sSwap + sPrice.charAt(i);				
-		}
-		if(sPrice.charAt(i) == '.' && !bFoundDot)
-		{
-			sSwap = sSwap + sPrice.charAt(i);
-			bFoundDot = true;
-		}
-		if(sPrice.charAt(i) == '0')
-			sSwap = sSwap + sPrice.charAt(i);
-	}			
-	return sSwap;
-	
-}
-function IsNumberic(sText)
-	{
-	   var ValidChars = '0123456789.';
-	   var IsNumber=true;
-	   var Char;
- 	   for (i = 0; i < sText.length && IsNumber == true; i++) 
-	   { 
-		  Char = sText.charAt(i); 
-		  if (ValidChars.indexOf(Char) == -1) 
-		  {
-			 IsNumber = false;
-		  }
-	   }
-		   return IsNumber;
-	}
-";
-		Response.Write(sjava);
-		Response.Write("-->");
-		Response.Write("</script");
-		Response.Write(">");
-		/*
-		Response.Write("<script language=javascript");
-		Response.Write(">");
-		int nRows = dtCart.Rows.Count;
-		if(g("fq") == "1" && nRows > 0)
-			Response.Write("document.form1.qty" + (nRows-1).ToString() + ".focus();document.form1.qty" + (nRows-1).ToString() + ".select();");
-		else
-			Response.Write("document.form1.item_code_search.focus();");
-		Response.Write("</script");
-		Response.Write(">");
-	*/
+
 
 		int nTotalRows = dtCart.Rows.Count;
 		if (nTotalRows >= 1)
@@ -2247,7 +2145,7 @@ function IsNumberic(sText)
 
 		Response.Write("<table width='" + tableWidth + "' align=center valign=center cellspacing=1 cellpadding=1 border=1 bordercolor=#EEEEEE bgcolor=white");
 		Response.Write(" style=\"font-family:Verdana;font-size:8pt;border-width:1px;border-style:Solid;border-collapse:collapse;fixed\">");
-		Response.Write("<tr><td colspan=2><br></td></tr>");
+
 		//customer
 		if (m_customerID == null && m_customerID == "" || m_customerID == "0")
 			Session[m_sCompanyName + "_dealer_level_for_pos" + m_ssid] = "1";
@@ -2282,19 +2180,6 @@ function IsNumberic(sText)
 
 		Response.Write("</table>");
 
-		/*	//payment
-			Response.Write("</td><td>");
-			Response.Write("<table><tr><td>");
-			Response.Write("<tr><td><b>Paid : </b></td><td><font color=red><b>");
-			if(m_bPaid)
-				Response.Write("YES");
-			else
-				Response.Write("NO");
-			Response.Write("</b></font></td></tr><tr><td><b>Payment : </b></td><td><b>");
-			if(m_bPaid)
-				Response.Write(GetEnumValue("payment_method", m_paymentType).ToUpper());
-			Response.Write("</b></td></tr></table>");
-		*/
 		//branch and sales
 		Response.Write("</td><td width=60% align=right valign=top>");
 		Response.Write("<table><tr><td>");
@@ -2936,36 +2821,7 @@ function IsNumberic(sText)
 		return true;
 	} // method WriteOrderItems ends
 
-	void PrintJavaFunction()
-	{
-		Response.Write("<script TYPE=text/javascript");
-		Response.Write(">");
-		Response.Write("function OnShippingMethodChange()");
-		Response.Write("{		");
-		Response.Write("	var m = Number(document.form1.shipping_method.value);\r\n");
-		Response.Write("	if(m == 1){document.all('tShipTo').style.visibility='hidden';document.all('tPT').style.visibility='visible';}\r\n");
-		Response.Write("	else{document.all('tShipTo').style.visibility='visible';document.all('tPT').style.visibility='hidden';}\r\n");
-		Response.Write("}\r\n");
-
-		Response.Write("function OnSpecialShiptoChange()								");
-		Response.Write("{																");
-		Response.Write("	var v = document.all('ssta').style.visibility;				");
-		Response.Write("	if(v != 'hidden')											");
-		Response.Write("	{															");
-		Response.Write("		document.all('ssta').style.visibility='hidden';			");
-		Response.Write("		document.all('tshiptoaddr').style.visibility='visible';	");
-		Response.Write("		document.all('tshiptoaddr').style.top = 10;			");
-		Response.Write("	}															");
-		Response.Write("	else														");
-		Response.Write("	{															");
-		Response.Write("		document.all('ssta').style.visibility='visible';		");
-		Response.Write("		document.all('tshiptoaddr').style.visibility='hidden';	");
-		Response.Write("	}															");
-		Response.Write("}																");
-
-		Response.Write("</script");
-		Response.Write(">");
-	} // metohd PrintJavaFunction ends
+	
 
 	bool ApplyPriceForCustomer()
 	{
