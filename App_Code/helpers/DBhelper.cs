@@ -112,6 +112,23 @@ public class DBhelper
         
     }
 
+ public void ExecuteDataSet(string sql,DataSet ds,string tableName)
+    {
+         using (SqlDataAdapter sda = new SqlDataAdapter(sql, DBhelperConnection))
+        {
+            try
+            {
+
+                sda.Fill(ds,tableName);
+            }
+            catch (Exception e)
+            {
+                ShowExp(sql, e);
+            }
+         
+        }
+        
+    }
     public DataTable ExecuteDataTable(string sql, params SqlParameter[] pars)
     {
         DataTable dt = new DataTable();
