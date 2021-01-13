@@ -41,15 +41,19 @@
     }
     void Application_Error(object sender, EventArgs e)
     {
+
+        Exception exc = Server.GetLastError();
+
+
+
         HttpException error = Server.GetLastError() as HttpException;
+
         if (error != null)
         {
             var statusCode = error.GetHttpCode();
             if (statusCode == 500)
             {
                 Response.StatusCode = 500;
-                // Response.Write(error.Message);
-                //Session["error"] = error.Message;
                 Server.ClearError();
                 Application["error"] = error.GetHtmlErrorMessage();
                 Response.Redirect("/v2/500.aspx");
@@ -59,14 +63,9 @@
                 Response.StatusCode = 404;
                 Server.ClearError();
                 Response.Write(error.Message);
-                Server.Transfer("/v2/error.aspx",false);
+                Server.Transfer("/v2/error.aspx", false);
             }
-            //else if (statusCode == 403)
-            //{
-            //    Response.StatusCode = 403;
-            //    Server.ClearError();
-            //    Server.Transfer("~/403.htm");
-            //}
+
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 /// <summary>
@@ -27,5 +28,9 @@ public class CommonUtils
     {
         HttpContext.Current.Items["Title"] = Title;
 
+    }
+    public static bool IsNumeric(string value)
+    {
+        return Regex.IsMatch(value, @"^[+-]?\d*[.]?\d*$");
     }
 }

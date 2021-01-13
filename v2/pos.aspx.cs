@@ -1420,7 +1420,7 @@ public partial class v2_pos : AdminBasePage
 
 		Response.Write("<td align=right>TOTAL</td></tr>");
 		//Response.Write("<tr><td colspan='" + m_cols + "'><input type=text name=item_code_search size=8 value=''>");
-		Response.Write("<tr><td colspan='" + m_cols + "'><select name=item_code_search value='' style='width:100%'><option></option></select>");
+		Response.Write("<tr><td colspan='" + m_cols + "'><select name=item_code_search value='' style='width:80%'><option></option></select>");
 		Response.Write("<input type=submit name=cmd " + Session["button_style"] + " size=8 value='Select From Categories'>");
 		Response.Write("</td><td align=right><input type=submit name=cmd " + Session["button_style"] + " value='Recalculate Price'></td></tr>");
 

@@ -15,8 +15,8 @@ using System.Drawing.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
-using System.Web.Mail;
-using System.Web.Security;
+using System.Net.Mail;
+using System.Net.Security;
 using System.Web.UI.WebControls;
 //using System.Web.Caching.Cache
 

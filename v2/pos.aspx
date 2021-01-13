@@ -147,7 +147,7 @@
 <asp:Content ContentPlaceHolderId="AdditionalJS" runat="server">
 <script src="/src/plugins/select2/js/select2.min.js"></script>
     <script>
-		$("select[name='item_code_search']").select2({
+		$("select").select2({
             ajax: {
                 url: "https://api.github.com/search/repositories",
                 dataType: 'json',

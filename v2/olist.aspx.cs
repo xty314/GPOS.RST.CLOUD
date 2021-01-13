@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 public partial class v2_olist : AdminBasePage
 {
 	int m_cols = 6;
-
+	
 	string m_branchID = "1";
 	string m_orderType = ""; //order
 	string m_action = "";
@@ -44,6 +44,7 @@ public partial class v2_olist : AdminBasePage
 	string m_sTo = "";
 	protected void Page_Load(object sender, EventArgs e)
     {
+		
 		CommonUtils.SetWebPageTitle("Sales List");
 	}
 	protected void Print_Page()
