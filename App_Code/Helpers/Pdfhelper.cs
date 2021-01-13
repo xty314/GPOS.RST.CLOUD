@@ -2,9 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
+using TuesPechkin;
+
 
 /// <summary>
 /// 当然，在实际环境里，如果你使用IIS，并且希望通过ASP.NET生成PDF，需要注意权限，
@@ -87,4 +91,51 @@ public class Pdfhelper
         //Response.WriteFile(destinationFile);
         //Response.End();
     }
+    public static void test()
+    {
+        string sessionId = HttpContext.Current.Request.Cookies["ASP.NET_SessionId"].Value;
+ 
+        LoadSettings loadSettings = new LoadSettings();
+        loadSettings.Cookies.Add("ASP.NET_SessionId", sessionId);
+
+        var document = new HtmlToPdfDocument
+        {
+         
+            GlobalSettings ={
+                    ProduceOutline = true,
+                    DocumentTitle = "retty Website",
+            
+                    PaperSize = PaperKind.A4, // Implicit conversion to PechkinPaperSize
+                    Margins =
+                    {
+                    All = 1.375,
+                    Unit = Unit.Centimeters
+                    }
+             },
+            Objects = {
+  
+            new ObjectSettings { PageUrl = "www.google.com"
+            ,LoadSettings=loadSettings
+                }
+            }
+         };
+     
+        IConverter converter =
+      new ThreadSafeConverter(
+          new RemotingToolset<PdfToolset>(
+              new Win32EmbeddedDeployment(
+                  new TempFolderDeployment())));
+
+        // Keep the converter somewhere static, or as a singleton instance!
+        // Do NOT run the above code more than once in the application lifecycle!
+
+        byte[] result = converter.Convert(document);
+        FileStream pFileStream = null;
+        string pdfpath = HttpContext.Current.Server.MapPath("~/export/pdf/invoice/ddasa.pdf");//生成的PDF文件路径  
+        pFileStream = new FileStream(pdfpath, FileMode.OpenOrCreate);
+            pFileStream.Write(result, 0, result.Length);
+
+
+
+        }
 }
