@@ -59,3 +59,6 @@ $(function () {
     }
 })
 
+function GetHtml($dom) {
+    return $('<div>').append($dom.clone()).remove().html()
+}

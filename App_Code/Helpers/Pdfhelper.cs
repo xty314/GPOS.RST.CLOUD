@@ -96,8 +96,8 @@ public class Pdfhelper
         string sessionId = HttpContext.Current.Request.Cookies["ASP.NET_SessionId"].Value;
  
         LoadSettings loadSettings = new LoadSettings();
-        loadSettings.Cookies.Add("ASP.NET_SessionId", sessionId);
-
+        //loadSettings.Cookies.Add("ASP.NET_SessionId", sessionId);
+        PechkinPaperSize paperSize = new PechkinPaperSize( "80mm", "80mm");
         var document = new HtmlToPdfDocument
         {
          
@@ -105,7 +105,7 @@ public class Pdfhelper
                     ProduceOutline = true,
                     DocumentTitle = "retty Website",
             
-                    PaperSize = PaperKind.A4, // Implicit conversion to PechkinPaperSize
+                    PaperSize =paperSize, // Implicit conversion to PechkinPaperSize
                     Margins =
                     {
                     All = 1.375,
@@ -114,8 +114,8 @@ public class Pdfhelper
              },
             Objects = {
   
-            new ObjectSettings { PageUrl = "www.google.com"
-            ,LoadSettings=loadSettings
+            new ObjectSettings { PageUrl = "http://www.baidu.com/"
+            //,LoadSettings=loadSettings
                 }
             }
          };
@@ -131,7 +131,7 @@ public class Pdfhelper
 
         byte[] result = converter.Convert(document);
         FileStream pFileStream = null;
-        string pdfpath = HttpContext.Current.Server.MapPath("~/export/pdf/invoice/ddasa.pdf");//生成的PDF文件路径  
+        string pdfpath = HttpContext.Current.Server.MapPath("~/export/pdf/invoice/ddasa1.pdf");//生成的PDF文件路径  
         pFileStream = new FileStream(pdfpath, FileMode.OpenOrCreate);
             pFileStream.Write(result, 0, result.Length);
 
