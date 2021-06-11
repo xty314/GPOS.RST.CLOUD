@@ -14,8 +14,8 @@ public class DBhelper
     private SqlConnection DBhelperConnection;
     
    private SqlConnectionStringBuilder connbuilder = new SqlConnectionStringBuilder();
-    
 
+    public string connectionString;
     public DBhelper()
     {
         connbuilder.DataSource = Settings.GetSetting("DataSource");
@@ -23,14 +23,14 @@ public class DBhelper
         connbuilder.Password = Settings.GetSetting("DBpwd");
         connbuilder.InitialCatalog = Settings.GetSetting("DBname");
         this.DBhelperConnection = new SqlConnection(connbuilder.ConnectionString);
+        connectionString = this.DBhelperConnection.ConnectionString;
 
     }
     public DBhelper(SqlConnection _DBhelperConnection)
     {
         this.DBhelperConnection = _DBhelperConnection;
+        connectionString = this.DBhelperConnection.ConnectionString;
     }
-
-
     HttpResponse Response;
     //构造时传入Response可在网页显示DEBUG；
     public DBhelper(HttpResponse _Response)
@@ -264,11 +264,11 @@ public class DBhelper
             {
                 ShowExp(procname, e);
             }
-            finally
-            {
-                if (DBhelperConnection.State != ConnectionState.Closed)
-                    DBhelperConnection.Close();
-            }
+            //finally
+            //{
+            //    if (DBhelperConnection.State != ConnectionState.Closed)
+            //        DBhelperConnection.Close();
+            //}
 
             return sdr;
 
@@ -303,13 +303,19 @@ public class DBhelper
             {
                 ShowExp(sql, e);
             }
-            finally
-            {
-                if (DBhelperConnection.State != ConnectionState.Closed)
-                    DBhelperConnection.Close();
-            }
+            //finally
+            //{
+            //    if (DBhelperConnection.State != ConnectionState.Closed)
+            //        DBhelperConnection.Close();
+            //}
             return sdr;
         }
+    }
+
+    public void CloseConn()
+    {
+        if (DBhelperConnection.State != ConnectionState.Closed)
+            DBhelperConnection.Close();
     }
     /// <summary>
     /// 增删改方法
@@ -518,6 +524,88 @@ public class DBhelper
             throw new Exception("Execute SQL Query Error.\n Query=" + query + "\n" + e.Message);
         }
 
+
+    }
+    public void SqlBulkCopy(string tableName,DataTable sourceTable)
+    {
+        try
+        {
+            if (DBhelperConnection.State != ConnectionState.Open)
+            {
+                DBhelperConnection.Open();
+            }
+            using (SqlBulkCopy sqlRevdBulkCopy = new SqlBulkCopy(DBhelperConnection))//引用SqlBulkCopy 
+            {
+                //SqlBulkCopyOptions.KeepIdentity
+                sqlRevdBulkCopy.DestinationTableName = tableName;//数据库中对应的表名 
+                sqlRevdBulkCopy.NotifyAfter = sourceTable.Rows.Count;//有几行数据 
+                sqlRevdBulkCopy.WriteToServer(sourceTable);//数据导入数据库 
+                sqlRevdBulkCopy.Close();//关闭连接 
+            }
+        }
+        catch (Exception ex)
+        {
+            throw (ex);
+        }
+        finally
+        {
+            if (DBhelperConnection.State != ConnectionState.Closed)
+                DBhelperConnection.Close();
+        }
+    }
+    public void SqlTransaction(params SqlCommand[] commands)
+    {
+
+
+        SqlTransaction transaction = null;
+
+        try
+        {
+
+            if (DBhelperConnection.State != ConnectionState.Open)
+            {
+                DBhelperConnection.Open();
+            }
+
+            transaction = DBhelperConnection.BeginTransaction();
+            foreach (SqlCommand command in commands)
+                {
+                    command.Connection = DBhelperConnection;
+                    command.Transaction= transaction;
+                    command.ExecuteNonQuery();
+                }
+                transaction.Commit();
+            
+        }
+        catch (Exception ex)
+        {
+            transaction.Rollback();
+            throw (ex);
+
+        }
+
+
+
+
+    }
+    /// <summary>
+    /// check if there is data in the target table.
+    /// </summary>
+    /// <param name="tableName">name of table</param>
+    /// <returns></returns>
+    public bool TableHasData(string tableName)
+    {
+        string sc = "SELECT ISNULL((SELECT TOP(1) 1 FROM @tableName),0)";
+        SqlParameter parameter = new SqlParameter("@tableName", tableName);
+        int i = (int)ExecuteScalar(sc, parameter);
+        if (i == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
     }
 }

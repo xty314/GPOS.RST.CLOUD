@@ -15,7 +15,7 @@ public partial class v2_default : AdminBasePage
         TS_PageLoad(); //do common things, LogVisit etc...
         if (!SecurityCheck("sales"))
             return;
-        Pdfhelper.test();
+        //Pdfhelper.test();
 
 
         //MailData md = new MailData()

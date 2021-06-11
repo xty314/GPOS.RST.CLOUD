@@ -70,11 +70,11 @@ public partial class Master_Page_LeftSidebar : System.Web.UI.UserControl
         ,"ecard.aspx?n=supplier&a=new"};
         if (Array.IndexOf(newMenu, submenu) != -1)
         {
-            return "/v2/" + submenu;
+            return "" + submenu;
         }
         else
         {
-            return "/admin/" + submenu;
+            return "./" + submenu;
         }
 
     }
