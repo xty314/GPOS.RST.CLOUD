@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="olist.aspx.cs" Inherits="v2_olist"  MasterPageFile="~/Master_Page/Admin_Layout/AdminLayout.master"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="olist.aspx.cs" Inherits="v2_olist"  MasterPageFile="~/master/Admin_Layout/AdminLayout.master"%>
 
 
 <%--注意加入MasterPageFile--%>

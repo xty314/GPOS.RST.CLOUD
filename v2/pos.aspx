@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="pos.aspx.cs" Inherits="v2_pos" MasterPageFile="~/Master_Page/Admin_Layout/AdminLayout.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="pos.aspx.cs" Inherits="v2_pos" MasterPageFile="~/master/Admin_Layout/AdminLayout.master" %>
 
 
 

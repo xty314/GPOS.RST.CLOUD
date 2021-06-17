@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="default.aspx.cs" Inherits="v2_default"  MasterPageFile="~/Master_Page/Admin_Layout/AdminLayout.master"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="default.aspx.cs" Inherits="v2_default"  MasterPageFile="~/master/Admin_Layout/AdminLayout.master"%>
+
 
 
 <%--注意加入MasterPageFile--%>

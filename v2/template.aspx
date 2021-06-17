@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="template.aspx.cs" Inherits="v2_template" MasterPageFile="~/Master_Page/Admin_Layout/AdminLayout.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="template.aspx.cs" Inherits="v2_template" MasterPageFile="~/master/Admin_Layout/AdminLayout.master" %>
 
 <%--import MasterPageFile--%>
 

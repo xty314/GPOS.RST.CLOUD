@@ -1,25 +1,40 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.30523.141
+VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gpos.Rst.Cloud", "Gpos.Rst.Cloud.csproj", "{C36F0818-572C-44F2-9048-EE0A154CDF76}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "GPOS.RST.CLOUD", ".", "{F13710EA-4E5C-4574-AA6C-6BDE66E31091}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_10321"
+		Debug.AspNetCompiler.PhysicalPath = "D:\MyProject\GPOS.RST.CLOUD\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_10321\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_10321"
+		Release.AspNetCompiler.PhysicalPath = "D:\MyProject\GPOS.RST.CLOUD\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_10321\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "10321"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C36F0818-572C-44F2-9048-EE0A154CDF76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C36F0818-572C-44F2-9048-EE0A154CDF76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C36F0818-572C-44F2-9048-EE0A154CDF76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C36F0818-572C-44F2-9048-EE0A154CDF76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F13710EA-4E5C-4574-AA6C-6BDE66E31091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F13710EA-4E5C-4574-AA6C-6BDE66E31091}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C5E99AA5-83CF-44B4-8179-FC026600E81A}
+		SolutionGuid = {3CD47914-638C-456A-8C76-E81FBADD3722}
 	EndGlobalSection
 EndGlobal

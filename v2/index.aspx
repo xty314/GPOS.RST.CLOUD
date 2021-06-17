@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="v2_index"   MasterPageFile="~/Master_Page/Admin_Layout/AdminLayout.master"%>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="v2_index"   MasterPageFile="~/master/Admin_Layout/AdminLayout.master"%>
 
 <%@ Register Src="~/User_Control/Breadcrumbs.ascx" TagPrefix="uc1" TagName="Breadcrumbs" %>
 
